@@ -11,12 +11,12 @@
   box-shadow: 4px -1px 56px 11px rgba(0,0,0,0.39);
 }
 
-.set-area {
+.from-area {
   padding: 25px 20px;
   background: #2c2c2c;
 }
 
-.user-input-label {
+.from-area__input-label {
   display: block;
   padding-bottom: 20px;
   font-size: 27px;
@@ -26,14 +26,14 @@
   color: lightgrey;
 }
 
-.action-btn-container {
+.btn-container {
   margin-bottom: 20px;
   display: flex;
   overflow: hidden;
   border-radius: 8px;
 }
 
-.action-btn {
+.btn {
   padding: 8px 10px;
   border: none;
   text-align: center;
@@ -43,28 +43,28 @@
   flex: 1 1 100%;
 }
 
-.action-btn--black {
+.btn--black {
   background: var(--main-dark);
   color: lightgrey;
 }
 
-.action-btn--white {
+.btn--white {
   background: #f4f4f4;
   color: var(--main-dark);
 }
 
-.action-btn--black.action-btn--active {
+.btn--black.btn--active {
   background: white;
   color: var(--main-dark);
 }
 
-.action-btn--white.action-btn--active {
+.btn--white.btn--active {
   background: var(--main-dark);
   color: white;
 }
 
-.action-btn:focus,
-.action-btn:hover {
+.btn:focus,
+.btn:hover {
   outline: none;
   transform: scale(1.5);
 }
@@ -74,13 +74,11 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-/* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
 }
 
-.user-input {
+.from-area_input {
   display: block;
   width: 100%;
   padding: 5px 10px;
@@ -93,11 +91,11 @@ input[type=number] {
   outline: lightgrey;
 }
 
-.res-area {
+.to-area {
   padding: 25px 20px;
 }
 
-.res {
+.result {
   word-break: break-all;
   margin: 0;
   padding: 16px 0;
@@ -107,4 +105,10 @@ input[type=number] {
   font-weight: 400;
   text-transform: uppercase;
   color: var(--main-dark);
+}
+
+.error {
+  font-size: 12px;
+  line-height: 15px;
+  color: #c62626;
 }

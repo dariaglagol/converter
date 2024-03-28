@@ -2,6 +2,22 @@ type RomanDateType = {
   [key: string]: number;
 };
 
+export enum ConverterMode {
+  decimal = "decimal",
+  binary = "binary",
+}
+
+export enum ConverterFrom {
+  decimal = "decimal",
+  binary = "binary",
+}
+
+export enum ConverterTo {
+  decimal = "decimal",
+  binary = "binary",
+  roman = "roman",
+}
+
 export const romanDateMap: RomanDateType = {
   M:1000,
   CM:900,

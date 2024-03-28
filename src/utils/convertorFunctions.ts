@@ -1,10 +1,5 @@
 import {romanDateMap} from '../constants'
-
-export enum ConverterMode {
-  decimal = "decimal",
-  binary = "binary",
-  roman = "roman",
-}
+import {ConverterMode} from '../constants.ts'
 
 export const convertor = {
   [ConverterMode.decimal]: {

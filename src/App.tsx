@@ -1,100 +1,90 @@
+import {useEffect, useState, ChangeEvent} from 'react'
 import './App.css';
-import {useEffect, useState} from 'react'
-import {convertor, ConverterMode} from './utils/convertorFunctions'
-
-const debounce = (callback: any, wait: number) => {
-  let timeoutId: any = null;
-  return (...args: any) => {
-    window.clearTimeout(timeoutId);
-    timeoutId = window.setTimeout(() => {
-      callback(...args);
-    }, wait);
-  };
-}
+import {convertor} from './utils/convertorFunctions'
+import debounce from './utils/debounce.ts';
+import {ConverterFrom, ConverterTo} from './constants.ts';
 
 function App() {
-  const [res, setRes] = useState<string | number | null>(null)
+  const [result, setResult] = useState<string | number | null>(null)
   const [userValue, setUserValue] = useState<string>('')
-  const [to, setTo] = useState(ConverterMode.decimal) // вот эта штука не менятеся так быстро
-  const [baseCalc, setBaseCalc] = useState(ConverterMode.binary)
+  const [to, setTo] = useState<ConverterTo>(ConverterTo.decimal)
+  const [from, setFrom] = useState<ConverterFrom>(ConverterFrom.binary)
+  const [error, setError] = useState<null | string>(null)
 
-  const handleFromSelect = (value: string) => {
-    // @ts-ignore
-    setBaseCalc(value)
+  const handleFromSelect = (value: ConverterFrom) => {
+    setFrom(value)
   }
 
-  const handleToSelect = (value: string) => {
-    // @ts-ignore
+  const handleToSelect = (value: ConverterTo) => {
     setTo(value)
   }
 
-  const handleInputChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = debounce((e: ChangeEvent<HTMLInputElement>) => {
     setUserValue(e.target.value)
   }, 500)
 
   useEffect(() => {
     if (userValue) {
-      // @ts-ignore
-      const calc = convertor[baseCalc][to](userValue)
-      setRes(calc)
+      const calc = convertor[from][to](userValue)
+      if (calc) {
+        setResult(calc)
+      } else {
+        setError('Something went wrong...')
+      }
     }
-  }, [to, baseCalc, userValue]);
+  }, [to, from, userValue]);
+
+  const renderFromControl = () => Object.keys(ConverterFrom).map((item: string) => {
+    const value = item as ConverterFrom
+    return (
+      <button
+        key={item}
+        type="button"
+        onClick={() => handleFromSelect(value)}
+        className={`btn btn--black ${item === from ? 'btn--active' : ''}`}
+      >
+        {item}
+      </button>
+    )
+  })
+
+  const renderToControl = () => Object.keys(ConverterTo).map((item: string) => {
+    const value = item as ConverterTo
+    return (
+      <button
+        key={item}
+        type="button"
+        className={`btn btn--white ${item === to ? 'btn--active' : ''}`}
+        onClick={() => handleToSelect(value)}
+      >
+        {item}
+      </button>
+    )
+  })
 
   return (
     <div className="App">
-      <form className="set-area">
-        <label htmlFor="user_value" className="user-input-label">
+      <div className="from-area">
+        <label htmlFor="user_value" className="from-area__input-label">
           Converter
         </label>
-        <div className="action-btn-container">
-          <button
-            type="button"
-            onClick={() => handleFromSelect('decimal')}
-            className={`action-btn action-btn--black ${'decimal' === baseCalc ? 'action-btn--active' : ''}`}
-          >
-            Decimal
-          </button>
-          <button
-            type="button"
-            onClick={() => handleFromSelect('binary')}
-            className={`action-btn action-btn--black ${'binary' === baseCalc ? 'action-btn--active' : ''}`}
-          >
-            Binary
-          </button>
+        <div className="from-area__btn-container btn-container">
+          {renderFromControl()}
         </div>
         <input
           type="number"
           name="user_value"
-          className="user-input"
+          className="from-area_input"
           onChange={handleInputChange}
           placeholder="Waiting for your input..."
         />
-      </form>
-      <div className="res-area">
-        <div className="action-btn-container">
-          <button
-            type="button"
-            className={`action-btn action-btn--white ${'decimal' === to ? 'action-btn--active' : ''}`}
-            onClick={() => handleToSelect('decimal')}
-          >
-            Decimal
-          </button>
-          <button
-            type="button"
-            className={`action-btn action-btn--white ${'binary' === to ? 'action-btn--active' : ''}`}
-            onClick={() => handleToSelect('binary')}
-          >
-            Binary
-          </button>
-          <button
-            type="button"
-            className={`action-btn action-btn--white ${'roman' === to ? 'action-btn--active' : ''}`}
-            onClick={() => handleToSelect('roman')}
-          >
-            Roman
-          </button>
+      </div>
+      <div className="to-area">
+        <div className="to-area__btn-container btn-container">
+          {renderToControl()}
         </div>
-        <p className="res">{res}</p>
+        <p className="result">{result}</p>
+        <span className="error">{error}</span>
       </div>
     </div>
   )
