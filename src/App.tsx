@@ -1,8 +1,8 @@
-import {useEffect, useState, ChangeEvent} from 'react'
-import './App.css';
-import {convertor} from './utils/convertorFunctions'
-import debounce from './utils/debounce.ts';
-import {ConverterFrom, ConverterTo} from './constants.ts';
+import { useEffect, useState, ChangeEvent } from 'react'
+import convertor from './utils/convertorFunctions'
+import debounce from './utils/debounce.ts'
+import { ConverterFrom, ConverterTo } from './constants.ts'
+import './App.css'
 
 function App() {
   const [result, setResult] = useState<string | number | null>(null)
@@ -28,11 +28,13 @@ function App() {
       const calc = convertor[from][to](userValue)
       if (calc) {
         setResult(calc)
+        setError(null)
       } else {
+        setResult(null)
         setError('Something went wrong...')
       }
     }
-  }, [to, from, userValue]);
+  }, [to, from, userValue])
 
   const renderFromControl = () => Object.keys(ConverterFrom).map((item: string) => {
     const value = item as ConverterFrom
@@ -65,13 +67,17 @@ function App() {
   return (
     <div className="App">
       <div className="from-area">
-        <label htmlFor="user_value" className="from-area__input-label">
+        <h5 className="from-area__header">
           Converter
-        </label>
+        </h5>
         <div className="from-area__btn-container btn-container">
           {renderFromControl()}
         </div>
+        <label htmlFor="user_value" className="from-area__input-label">
+          Number to convert
+        </label>
         <input
+          id="user_value"
           type="number"
           name="user_value"
           className="from-area_input"
@@ -83,11 +89,11 @@ function App() {
         <div className="to-area__btn-container btn-container">
           {renderToControl()}
         </div>
-        <p className="result">{result}</p>
+        <p className="result" aria-label="converter result area">{result}</p>
         <span className="error">{error}</span>
       </div>
     </div>
   )
 }
 
-export default App;
+export default App

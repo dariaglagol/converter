@@ -1,11 +1,11 @@
 const debounce = (callback: any, wait: number) => {
-  let timeoutId: any = null;
+  let timeoutId: any = null
   return (...args: any) => {
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutId)
     timeoutId = setTimeout(() => {
-      callback(...args);
-    }, wait);
-  };
+      callback(...args)
+    }, wait)
+  }
 }
 
 export default debounce

@@ -16,14 +16,23 @@
   background: #2c2c2c;
 }
 
-.from-area__input-label {
-  display: block;
+.from-area__header {
+  margin: 0;
   padding-bottom: 20px;
   font-size: 27px;
   line-height: 35px;
   font-weight: 400;
   text-transform: uppercase;
   color: lightgrey;
+}
+
+.from-area__input-label {
+  display: block;
+  width:1px;
+  height:1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
 }
 
 .btn-container {
@@ -97,8 +106,8 @@ input[type=number] {
 
 .result {
   word-break: break-all;
+  min-height: 36px;
   margin: 0;
-  padding: 16px 0;
   border-bottom: 1px solid var(--main-dark);
   font-size: 27px;
   line-height: 35px;

@@ -1,37 +1,46 @@
-import {romanDateMap} from '../constants'
-import {ConverterMode} from '../constants.ts'
+import { romanDateMap, ConverterMode } from '../constants.ts'
 
-export const convertor = {
-  [ConverterMode.decimal]: {
-    'binary': function (decimal: string):string { return Number(decimal).toString(2) },
-    'decimal': function (value: string):string { return value },
-    'roman': function (value: string): string {
-      let prepareValue = Number(value)
-      let roman = ''
-      let i = '';
-      for ( i in romanDateMap ) {
-        while ( prepareValue >= romanDateMap[i] ) {
-          roman += i;
-          prepareValue -= romanDateMap[i];
-        }
-      }
-      return roman;
+const isBinary = (str: string) => {
+  const num = parseInt(str, 2)
+  return num.toString(2) === str
+}
+
+const convertToRoman = (value: number) => {
+  let processedValue = value
+  let roman = ''
+  Object.keys(romanDateMap).forEach((i: string) => {
+    while (processedValue >= romanDateMap[i]) {
+      roman += i
+      processedValue -= romanDateMap[i]
     }
+  })
+  return roman
+}
+
+const convertor = {
+  [ConverterMode.decimal]: {
+    binary(value: string):string { return Number(value).toString(2) },
+    decimal(value: string):string { return value },
+    roman(value: string): string {
+      const preparedValue = Number(value)
+      return convertToRoman(preparedValue)
+    },
   },
   [ConverterMode.binary]: {
-    'binary': function (decimal: string):string { return decimal },
-    'decimal': function (bin: string):number { return parseInt(bin, 2) },
-    'roman': function (value: string): string {
-      let prepareValue =  Number(this.decimal(value))
-      let roman = ''
-      let i = '';
-      for ( i in romanDateMap ) {
-        while ( prepareValue >= romanDateMap[i] ) {
-          roman += i;
-          prepareValue -= romanDateMap[i];
-        }
+    binary(value: string):string {
+      return isBinary(value) ? value : ''
+    },
+    decimal(value: string):number {
+      return isBinary(value) ? parseInt(value, 2) : 0
+    },
+    roman(value: string): string {
+      if (isBinary(value)) {
+        const preparedValue = this.decimal(value)
+        return convertToRoman(preparedValue)
       }
-      return roman;
-    }
-  }
+      return ''
+    },
+  },
 }
+
+export default convertor
