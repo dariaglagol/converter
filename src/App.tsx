@@ -1,6 +1,16 @@
 import './App.css';
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {convertor, ConverterMode} from './utils/convertorFunctions'
+
+const debounce = (callback: any, wait: number) => {
+  let timeoutId: any = null;
+  return (...args: any) => {
+    window.clearTimeout(timeoutId);
+    timeoutId = window.setTimeout(() => {
+      callback(...args);
+    }, wait);
+  };
+}
 
 function App() {
   const [res, setRes] = useState<string | number | null>(null)
@@ -16,33 +26,36 @@ function App() {
   const handleToSelect = (value: string) => {
     // @ts-ignore
     setTo(value)
-    // @ts-ignore
-    const calc = convertor[value](userValue)
-    setRes(calc)
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-  }
+  const handleInputChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserValue(e.target.value)
+  }, 500)
 
-  const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setUserValue(e.currentTarget.value)
-  }
+  useEffect(() => {
+    if (userValue) {
+      // @ts-ignore
+      const calc = convertor[baseCalc][to](userValue)
+      setRes(calc)
+    }
+  }, [to, baseCalc, userValue]);
 
   return (
     <div className="App">
-      <form onSubmit={handleSubmit} className="set-area">
+      <form className="set-area">
         <label htmlFor="user_value" className="user-input-label">
           Converter
         </label>
         <div className="action-btn-container">
           <button
+            type="button"
             onClick={() => handleFromSelect('decimal')}
             className={`action-btn action-btn--black ${'decimal' === baseCalc ? 'action-btn--active' : ''}`}
           >
             Decimal
           </button>
           <button
+            type="button"
             onClick={() => handleFromSelect('binary')}
             className={`action-btn action-btn--black ${'binary' === baseCalc ? 'action-btn--active' : ''}`}
           >
@@ -60,18 +73,21 @@ function App() {
       <div className="res-area">
         <div className="action-btn-container">
           <button
+            type="button"
             className={`action-btn action-btn--white ${'decimal' === to ? 'action-btn--active' : ''}`}
             onClick={() => handleToSelect('decimal')}
           >
             Decimal
           </button>
           <button
+            type="button"
             className={`action-btn action-btn--white ${'binary' === to ? 'action-btn--active' : ''}`}
             onClick={() => handleToSelect('binary')}
           >
             Binary
           </button>
           <button
+            type="button"
             className={`action-btn action-btn--white ${'roman' === to ? 'action-btn--active' : ''}`}
             onClick={() => handleToSelect('roman')}
           >
