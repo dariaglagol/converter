@@ -1,38 +1,110 @@
+:root {
+  --main-dark: #373737;
+}
+
 .App {
-  text-align: center;
+  overflow: hidden;
+  margin: 30px auto;
+  width: 460px;
+  min-height: 390px;
+  border-radius: 30px;
+  box-shadow: 4px -1px 56px 11px rgba(0,0,0,0.39);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.set-area {
+  padding: 25px 20px;
+  background: #2c2c2c;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.user-input-label {
+  display: block;
+  padding-bottom: 20px;
+  font-size: 27px;
+  line-height: 35px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: lightgrey;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.action-btn-container {
+  margin-bottom: 20px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.action-btn {
+  padding: 8px 10px;
+  border: none;
+  text-align: center;
+  font-size: 15px;
+  line-height: 25px;
+  text-transform: uppercase;
+  flex: 1 1 100%;
+}
+
+.action-btn--black {
+  background: var(--main-dark);
+  color: lightgrey;
+}
+
+.action-btn--white {
+  background: #f4f4f4;
+  color: var(--main-dark);
+}
+
+.action-btn--black.action-btn--active {
+  background: white;
+  color: var(--main-dark);
+}
+
+.action-btn--white.action-btn--active {
+  background: var(--main-dark);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.action-btn:focus,
+.action-btn:hover {
+  outline: none;
+  transform: scale(1.5);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.user-input {
+  display: block;
+  width: 100%;
+  padding: 5px 10px;
+  border: 1px solid lightgrey;
+  font-size: 25px;
+  line-height: 30px;
+  background: var(--main-dark);
+  border-radius: 8px;
+  color: white;
+  outline: lightgrey;
+}
+
+.res-area {
+  padding: 25px 20px;
+}
+
+.res {
+  word-break: break-all;
+  margin: 0;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--main-dark);
+  font-size: 27px;
+  line-height: 35px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--main-dark);
 }

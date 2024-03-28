@@ -1,38 +1,30 @@
 {
-  "name": "untitled",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
+  "name": "CFLOX",
+  "version": "1.0.0",
+  "description": "home task for CFLOX",
+  "main": "index.ts",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "tests": "vite test"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "author": "Daria Glagol",
+  "license": "ISC",
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@types/react": "18.2.66",
+    "@types/react-dom": "18.2.22",
+    "@typescript-eslint/eslint-plugin": "7.2.0",
+    "@typescript-eslint/parser": "7.2.0",
+    "@vitejs/plugin-react": "4.2.1",
+    "eslint": "8.57.0",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-react-refresh": "0.4.6",
+    "typescript": "5.2.2",
+    "vite": "5.1.6",
+    "vite-plugin-svgr": "4.2.0"
   }
 }
